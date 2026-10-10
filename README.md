@@ -2,7 +2,12 @@
 
 Campaign Wiki is a transcript-first tabletop RPG knowledge system. It keeps raw sources, AI proposals, GM rulings, structured canon, wiki projections, FAQ answers, errata and public publishing separate so generated text cannot launder itself into evidence.
 
-This repository currently ships a local, file-backed Next.js implementation plus Supabase/Postgres migrations for the production data model. The manual workflow works without AI credentials or cloud services.
+This repository currently ships two runnable paths:
+
+- A static Vite/React app that loads directly in the browser, persists to `localStorage`, and is suitable for GitHub Pages demos.
+- A Next.js/Supabase-shaped service layer plus Postgres migrations for the fuller production architecture.
+
+The manual workflow works without AI credentials or cloud services.
 
 ## Local Startup
 
@@ -18,15 +23,15 @@ This repository currently ships a local, file-backed Next.js implementation plus
    cp .env.example .env.local
    ```
 
-3. Start the app:
+3. Start the static app:
 
    ```bash
    npm run dev
    ```
 
-4. Open `http://localhost:3000`, choose `Seed demo`, then explore the dashboard.
+4. Open `http://127.0.0.1:5173`, choose `Seed Demo`, then explore the dashboard.
 
-The local app persists data to `data/campaign-wiki.json` by default. That file is ignored by git because live campaign data should not be committed to a public repository.
+The static app persists data to browser `localStorage`. Export JSON backups from the Operations panel before clearing browser data. Live campaign data should not be committed to a public repository.
 
 ## Verification
 
@@ -35,6 +40,12 @@ npm run lint
 npm run typecheck
 npm run test
 npm run build
+```
+
+The default `npm run build` creates a static `dist/` build for GitHub Pages. The Next.js backend-shaped build remains available as:
+
+```bash
+npm run build:next
 ```
 
 Playwright smoke tests are included but require browser binaries:

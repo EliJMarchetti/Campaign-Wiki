@@ -6,10 +6,10 @@ Last updated: 2026-10-09.
 
 | Slice | Status | Evidence |
 | --- | --- | --- |
-| 1. Foundation and scope hierarchy | Implemented locally; Supabase schema drafted | Next.js app, file-backed repository, scope services, memberships, demo seed, Postgres/RLS migration |
-| 2. Source archive | Implemented for paste/TXT/MD/JSON/SRT/VTT plus built-in best-effort DOCX/text-PDF extraction; scanned PDF OCR remains future work | Import wizard, normalized blocks, transcript utterances, tracks, speaker corrections |
-| 3. Canon management without AI | Implemented | Entities, structured claims, claim evidence, rulings, promotion, inheritance, search, article projections |
-| 4. AI pipeline and prompt packages | Implemented for mock provider, prompt export/import and OpenAI adapter boundary; live OpenAI not exercised without credentials | Prompt packets, validation, jobs, proposals |
+| 1. Foundation and scope hierarchy | Implemented locally in the static app; Supabase schema drafted | Vite app, localStorage persistence, scope services, demo seed, Postgres/RLS migration |
+| 2. Source archive | Implemented for browser paste/TXT-like content and server-side adapters retained for TXT/MD/JSON/SRT/VTT plus best-effort DOCX/text-PDF extraction; scanned PDF OCR remains future work | Import wizard, normalized blocks, transcript-like anchors, tracks |
+| 3. Canon management without AI | Implemented | Entities, structured claims, claim evidence, inheritance, search, article projections |
+| 4. AI pipeline and prompt packages | Implemented for mock provider in static UI; Next service code retains prompt export/import and OpenAI adapter boundary; live OpenAI not exercised without credentials | Mock proposals, prompt files, validation tests |
 | 5. Conflict/errata/FAQ | Partially implemented | Errata ledger, contradiction cases, FAQ manager, FAQ drafts; advanced automatic dependency propagation remains limited |
 | 6. Sharing and polish | Partially implemented | Role-safe filtering, view-as previews, exports, responsive UI; production Supabase auth wiring and public hosting are not complete |
 
@@ -35,12 +35,12 @@ Last updated: 2026-10-09.
 
 ## Known Gaps
 
-- Supabase Auth UI and cloud deployment are documented but not wired to a live Supabase project in this local run.
+- Supabase Auth UI and cloud deployment are documented but not wired to a live Supabase project in this local run. The default shipped UI is static/localStorage so it can load on GitHub Pages.
 - DOCX parsing is best-effort for normal Word document text. PDF parsing is best-effort for text PDFs with literal text; scanned PDF OCR is intentionally future work.
 - Queue processing is durable in the local repository but not yet mapped to pgmq.
-- Playwright smoke tests are included but were not run in this pass; the sandboxed HTTP probe timed out even while the attached Next dev server reported ready.
+- Playwright smoke tests are included but hung on the local web-server handoff in this environment; unit/integration tests and static production build pass.
 
 ## Latest Verification
 
-- `npm run verify` passed on 2026-10-09: lint, typecheck, 14 Vitest tests and production build.
+- `npm run verify` passed on 2026-10-09: lint, typecheck, 14 Vitest tests and static production build.
 - `npm audit` passed with 0 known vulnerabilities after replacing vulnerable parser and lint dependencies.
